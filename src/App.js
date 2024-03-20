@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import NumberForm from './components/NumberForm';
+import NumberResponse from './components/NumberResponse';
+import { generateRandomResponse } from './utils';
 
 function App() {
+  const [responseData, setResponseData] = useState(null);
+
+ 
+  const handleSubmit = async (numberId) => {
+ 
+    if (!Number.isInteger(Number(numberId))) {
+      console.error('Invalid input: Please enter an integer');
+      return;
+    }
+
+   
+    const parsedNumberId = parseInt(numberId);
+
+    const response = generateRandomResponse();
+
+  
+    setResponseData(response);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Average Calculator Microservice</h1>
+      <NumberForm handleSubmit={handleSubmit} />
+      <NumberResponse responseData={responseData} />
     </div>
   );
 }
